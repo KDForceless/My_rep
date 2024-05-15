@@ -82,8 +82,8 @@ def choose_pr_count_buttons(plus_or_minus='',amount=1):
     if plus_or_minus == 'decrement':
         if amount > 1:
             count = types.InlineKeyboardButton(text=str(amount-1), callback_data=amount)
-    elif plus_or_minus == 'increment':
-        count = types.InlineKeyboardButton(text=str(amount + 1), callback_data=amount)
+        elif plus_or_minus == 'increment':
+            count = types.InlineKeyboardButton(text=str(amount + 1), callback_data=amount)
 
     kb.add(minus, count, plus)
     kb.row(to_cart, back)
