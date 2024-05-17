@@ -57,16 +57,6 @@ def pr_buttons(products):
     kb.row(cart)
     return kb
 
-def choose_lang(arg=''):
-    kb = types.InlineKeyboardMarkup(row_width=2)
-    rus = types.InlineKeyboardButton(text='Русский',callback_data='Russian')
-    uzb = types.InlineKeyboardButton(text='Узбекский',callback_data='Uzbek')
-    if arg == 'Russian':
-        lang = types.InlineKeyboardButton(text=str('Теперь язык русский'))
-    if arg == 'Uzbek':
-        lang = types.InlineKeyboardButton(text=str('Endi til o‘zbek tilidir'))
-    kb.add(rus, uzb)
-    return kb
 
 def choose_pr_count_buttons(plus_or_minus='',amount=1):
     #пространство
@@ -82,9 +72,21 @@ def choose_pr_count_buttons(plus_or_minus='',amount=1):
     if plus_or_minus == 'decrement':
         if amount > 1:
             count = types.InlineKeyboardButton(text=str(amount-1), callback_data=amount)
-        elif plus_or_minus == 'increment':
-            count = types.InlineKeyboardButton(text=str(amount + 1), callback_data=amount)
+    elif plus_or_minus == 'increment':
+        count = types.InlineKeyboardButton(text=str(amount + 1), callback_data=amount)
 
     kb.add(minus, count, plus)
     kb.row(to_cart, back)
     return kb
+
+def cart_buttons():
+    kb = types.InlineKeyboardMarkup(row_width=2)
+
+    clear = types.InlineKeyboardButton(text='Очистить заказ', callback_data='clear')
+    order = types.InlineKeyboardButton(text='Оформить заказ', callback_data='order')
+    back = types.InlineKeyboardButton(text='Назад', callback_data='back')
+
+    kb.add(clear, order)
+    kb.row(back)
+    return kb
+

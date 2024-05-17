@@ -6,7 +6,7 @@ conn = sqlite3.connect('delivery.db', check_same_thread=False)
 sql = conn.cursor()
 
 #создание таблицы пользователи
-sql.execute('CREATE TABLE IF NOT EXISTs users '
+sql.execute('CREATE TABLE IF NOT EXISTS users '
             '(id INTEGER, name TEXT, number TEXT, location TEXT);')
 
 #создание таблицы продукты
@@ -43,13 +43,17 @@ def get_all_pr():
 #Метод для проверки товара
 def get_pr_id():
     result = sql.execute('SELECT pr_id FROM products;').fetchall()
-    pr_list = [i[0] for i in result]
+    pr_list = [i[0] for i  in result]
     return pr_list
 
 
 #метод для вывода определенного товара
 def get_exact_pr(id):
     return sql.execute('SELECT * FROM products WHERE pr_id=?;',(id,)).fetchone()
+
+#метод вывода цены товара по его названию
+def get_exact_price(pr_name):
+    return sql.execute('SELECT pr_price FROM products WHERE pr_name=?;', (pr_name,)).fetchone()
 
 #Метод для добавления продукта в ДБ
 def add_pr(pr_name, pr_desc, pr_price, pr_photo, pr_count):
@@ -113,10 +117,13 @@ def make_order(user_id):
     for i in product_name:
         product_counts.append(sql.execute('SELECT pr_count FROM products WHERE pr_name=?;', (i[0],)).fetchone()[0])
     totals = []
-    for e, c in product_quantity, product_counts:
-        totals.append(c - e[0])
-    for t, n in totals, product_name:
-        sql.execute('UPDATE products SET pr_count=? WHERE pr_name=?;', (t, n[0]))
+    for e, c in product_quantity:
+        for c in product_counts:
+            totals.append(c - e[0])
+    for t in totals:
+        for n in product_name:
+            sql.execute('UPDATE products SET pr_count=? WHERE pr_name=?;', (t, n[0]))
+    sql.execute('DELETE FROM CART WHERE user_id=?;',(user_id))
     address = sql.execute('SELECT location FROM users WHERE id=?;', (user_id,)).fetchone()
     # Фиксируем изменения
     conn.commit()
