@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3> Hello world!</h3>
+<!--categories = ['asd', 'bsd', 'asd2']-->
+{% for i in categories %}
+    <p>Название: {{ i.title }}</p>
+    <p>ID: {{ i.pk }}</p>
+{% endfor %}
+
+<h3>This is products</h3>
+{% for j in products %}
+    <p>Название товара: {{ j }}</p>
+    <p>Цена: {{ j.price }}</p>
+    <p>Описание: {{ j.description }}</p>
+    <p>Количество: {{ j.count }}</p>
+    <p>Время создания: {{ j.created_at }}</p>
+    <a href="">Buy</a>
+    {% empty %}
+        <p>Product not found</p>
+{% endfor %}
+</body>
+</html>

@@ -7,7 +7,7 @@ class CategoryModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.title
+        return str(self.pk)
 
     class Meta:
         verbose_name = 'Category'
@@ -18,6 +18,7 @@ class CategoryModel(models.Model):
 class ProductModel(models.Model):
     title = models.CharField(max_length=100, help_text='Тут вы должны писать название вашего продукта')
     price = models.FloatField()
+    category = models.ForeignKey(CategoryModel, on_delete=models.CASCADE, null=True)
     image = models.FileField(upload_to='product_images')
     descriptions = models.TextField()
     count = models.IntegerField(default=0)
@@ -39,6 +40,7 @@ class ProductModel(models.Model):
 class CartModel(models.Model):
     title = models.CharField(max_length=100)
     price = models.FloatField()
+    product_key = models.ForeignKey(ProductModel, on_delete=models.CASCADE, null=True)
     count = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -57,8 +59,8 @@ class NewsCategory(models.Model):
         return self.title
 
     class Meta:
-        verbose_name = 'Category'
-        verbose_name_plural = 'Categories'
+        verbose_name = 'NewsCategory'
+        verbose_name_plural = 'NewsCategories'
 
 
 class News(models.Model):
