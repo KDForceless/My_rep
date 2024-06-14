@@ -19,10 +19,17 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
+from django.contrib.auth import views as auth_views
+from accounts import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('Projectnews.urls')),
+    path('login/', auth_views.LoginView.as_view(), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('register/', views.register, name='register'),
+    path('dashboard/', views.dashboard, name='dashboard'),
+    path('edit/', views.edit, name='edit'),
 ]
 
 
