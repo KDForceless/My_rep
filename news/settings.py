@@ -78,10 +78,10 @@ WSGI_APPLICATION = 'news.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'masteruser',
-        'PASSWORD': '12345678',
-        'HOST': 'w3-django-project.cdxmgq9zqqlr.us-east-1.rds.amazonaws.com',
+        'NAME': 'django51_db',
+        'USER': 'django51_user',
+        'PASSWORD': 'django51_password',
+        'HOST': 'localhost',
         'PORT': '5432'
     }
 }
